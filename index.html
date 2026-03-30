@@ -71,6 +71,74 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-博客配置与obsidian适配" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/03/23/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E4%B8%8Eobsidian%E9%80%82%E9%85%8D/" class="article-date">
+  <time class="dt-published" datetime="2026-03-23T00:00:00.000Z" itemprop="datePublished">2026-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/03/23/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E4%B8%8Eobsidian%E9%80%82%E9%85%8D/">博客配置与obsidian适配</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="1-核心需求"><a href="#1-核心需求" class="headerlink" title="1. 核心需求"></a>1. 核心需求</h2><p>在本地使用 Obsidian 编写文章，要求：</p>
+<ul>
+<li><strong>链接兼容性</strong>：使用标准 Markdown 图片语法而非 Wiki 链接，确保 Hexo 正常渲染。</li>
+<li><strong>附件管理</strong>：图片粘贴时自动存放至与笔记同名的子文件夹中。</li>
+<li><strong>重命名流</strong>：粘贴图片时顺手重命名，保持文件整洁。</li>
+</ul>
+<h2 id="2-Obsidian-基础设置"><a href="#2-Obsidian-基础设置" class="headerlink" title="2. Obsidian 基础设置"></a>2. Obsidian 基础设置</h2><p>首先需要关闭 Wiki 链接，强制 Obsidian 生成标准 Markdown 链接（即 <code>[alt](path)</code> 格式）。</p>
+<ol>
+<li>打开 <strong>设置 -&gt; 文件与链接 -&gt; 使用 Wiki 链接</strong>：关闭。</li>
+<li><strong>附件默认存放路径</strong>：指定的附件文件夹（之后会通过插件来配置）。</li>
+</ol>
+<img src="/2026/03/23/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E4%B8%8Eobsidian%E9%80%82%E9%85%8D/%E5%85%B3%E9%97%AD%E4%BD%BF%E7%94%A8wiki%E9%93%BE%E6%8E%A5.png" class="">
+
+<h2 id="3-插件配置"><a href="#3-插件配置" class="headerlink" title="3. 插件配置"></a>3. 插件配置</h2><p>Custom Attachment Location和consistent attachments and links<br>目前我本地的文件配置是可以正常运行的，但是在沙盒仓库里试图一步一步复现的时候失败了。暂时先放在这里，如果想使用这套方案可以直接复制<a target="_blank" rel="noopener" href="https://github.com/zhimaheiye/hexo-obsidian">hexo-obsidian</a>这个仓库里的配置文件覆盖本地文件，这个我试了是可以用的</p>
+<h2 id="4-实现后的工作流"><a href="#4-实现后的工作流" class="headerlink" title="4. 实现后的工作流"></a>4. 实现后的工作流</h2><ol>
+<li><strong>截图或复制图片</strong>。</li>
+<li><strong>在笔记中粘贴</strong>：<ul>
+<li>图片会自动创建并存入 <code>./笔记名/</code> 目录下。</li>
+</ul>
+</li>
+<li><strong>重命名图片</strong>：<ul>
+<li>粘贴后立即重命名，保持附件可读性。</li>
+</ul>
+</li>
+<li><strong>推送博客</strong>：<ul>
+<li>最终生成的语法是标准 MD 格式：<code>&#123;% asset_img "图片名.png" "图片名" %&#125;</code>。</li>
+<li>这种格式在 Hexo 开启 <code>post_asset_folder: true</code> 或直接使用相对路径引用时，可以完美在网页渲染。</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zhimaheiye.github.io/2026/03/23/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E4%B8%8Eobsidian%E9%80%82%E9%85%8D/" data-id="cuidX-YgxXcdL62A7hMIXQh_I" data-title="博客配置与obsidian适配" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-obsidian使用技巧（缓慢更新中）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2026/03/21/obsidian%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E7%BC%93%E6%85%A2%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/" class="article-date">
@@ -113,11 +181,12 @@
 <p>建议开启，这样后续编辑一篇笔记，插件就会自动扫描这篇笔记，把散落在外面的图片，自动抓取并移动到 <code>assets</code> 文件夹里<br><strong>Move Attachments with Note (随笔记移动附件)</strong>：</p>
 <img src="/2026/03/21/obsidian%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E7%BC%93%E6%85%A2%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/%E9%9A%8F%E7%AC%94%E8%AE%B0%E7%A7%BB%E5%8A%A8%E9%99%84%E4%BB%B6.png" class="">
 <p>建议开启，后续笔记移动时，相关的附件也会被自动移走</p>
-<h1 id="创建模板"><a href="#创建模板" class="headerlink" title="创建模板"></a>创建模板</h1>
+<h1 id="创建模板"><a href="#创建模板" class="headerlink" title="创建模板"></a>创建模板</h1><p>（待补充）</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/03/21/obsidian%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E7%BC%93%E6%85%A2%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/" data-id="cuid37-ppy9-a4pPMuBG3QJqJ" data-title="obsidian使用技巧（缓慢更新中）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/03/21/obsidian%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E7%BC%93%E6%85%A2%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/" data-id="cuidFUcCyhNB9ABdttduEoecG" data-title="obsidian使用技巧（缓慢更新中）" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -280,7 +349,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/03/07/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8F%96%E8%BE%93%E5%85%A5%E6%B3%95%E8%BE%93%E5%87%BA/" data-id="cuidjKpY1eEobZ5x3NP7IKxHF" data-title="本地抓取输入法输出" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/03/07/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8F%96%E8%BE%93%E5%85%A5%E6%B3%95%E8%BE%93%E5%87%BA/" data-id="cuidgC4jbiQbpIfNLx6mPnPI6" data-title="本地抓取输入法输出" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -368,7 +437,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/02/28/docker%E9%83%A8%E7%BD%B2%E7%94%B5%E5%AD%90%E6%97%B6%E9%92%9F%E7%BD%91%E9%A1%B5/" data-id="cuidTGuj6iHyBAGBdA4UxLald" data-title="docker部署电子时钟网页" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/02/28/docker%E9%83%A8%E7%BD%B2%E7%94%B5%E5%AD%90%E6%97%B6%E9%92%9F%E7%BD%91%E9%A1%B5/" data-id="cuid1eICx_f8hdzPihj5CMKxd" data-title="docker部署电子时钟网页" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -448,7 +517,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/01/18/%E8%87%AA%E5%8A%A8%E6%8A%93%E5%8F%96%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E6%B4%BB%E5%8A%A8/" data-id="cuidBvOPWdmOy_rclgX-Si1Lu" data-title="自动抓取明日方舟活动" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/01/18/%E8%87%AA%E5%8A%A8%E6%8A%93%E5%8F%96%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E6%B4%BB%E5%8A%A8/" data-id="cuid-z2J_mYHArjkW3zVY7J7S" data-title="自动抓取明日方舟活动" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -503,6 +572,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2026/03/23/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E4%B8%8Eobsidian%E9%80%82%E9%85%8D/">博客配置与obsidian适配</a>
+          </li>
         
           <li>
             <a href="/2026/03/21/obsidian%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E7%BC%93%E6%85%A2%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/">obsidian使用技巧（缓慢更新中）</a>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>多设备同步浏览器缓存 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="需求描述在不同设备打开静态网页的时候，会填写数据，但是这些数据缓存在浏览器里，只能在这个设备的这个浏览器里查看。虽然有的网页有导出功能，但是一方面手动导出并在另一台设备覆盖的步骤较为复杂，另一方面很容易忘记 解决方案：Tampermonkey 用户脚本基本信息 数据存储：localStorage（设置）+ IndexedDB&#x2F;Dexie（聊天记录等主数据） 方案：Tampermonkey 用户脚本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多设备同步浏览器缓存">
+<meta property="og:url" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="需求描述在不同设备打开静态网页的时候，会填写数据，但是这些数据缓存在浏览器里，只能在这个设备的这个浏览器里查看。虽然有的网页有导出功能，但是一方面手动导出并在另一台设备覆盖的步骤较为复杂，另一方面很容易忘记 解决方案：Tampermonkey 用户脚本基本信息 数据存储：localStorage（设置）+ IndexedDB&#x2F;Dexie（聊天记录等主数据） 方案：Tampermonkey 用户脚本">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86.png">
+<meta property="og:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E6%B7%BB%E5%8A%A0%E5%BA%94%E7%94%A8%E5%AF%86%E7%A0%81.png">
+<meta property="og:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E7%AF%A1%E6%94%B9%E7%8C%B4.png">
+<meta property="og:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E5%85%81%E8%AE%B8%E8%AE%BF%E9%97%AE%E6%96%87%E4%BB%B6URL.png">
+<meta property="og:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E6%B7%BB%E5%8A%A0%E6%96%B0%E8%84%9A%E6%9C%AC.png">
+<meta property="og:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E4%BF%9D%E5%AD%98%E6%96%B0%E8%84%9A%E6%9C%AC.png">
+<meta property="og:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E5%AE%89%E8%A3%85%E5%A5%BD%E7%9A%84%E8%84%9A%E6%9C%AC.png">
+<meta property="og:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E9%85%8D%E7%BD%AE%E5%9D%9A%E6%9E%9C%E4%BA%91%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81.png">
+<meta property="og:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E4%B8%8A%E4%BC%A0%E5%BD%93%E5%89%8D%E7%BC%93%E5%AD%98%E8%87%B3%E4%BA%91%E7%AB%AF.png">
+<meta property="og:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E4%BB%8E%E4%BA%91%E7%AB%AF%E8%A6%86%E7%9B%96%E6%81%A2%E5%A4%8D%E6%9C%AC%E5%9C%B0.png">
+<meta property="article:published_time" content="2026-05-31T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-02T11:55:48.837Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://zhimaheiye.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-多设备同步浏览器缓存" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/" class="article-date">
+  <time class="dt-published" datetime="2026-05-31T00:00:00.000Z" itemprop="datePublished">2026-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      多设备同步浏览器缓存
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h1><p>在不同设备打开静态网页的时候，会填写数据，但是这些数据缓存在浏览器里，只能在这个设备的这个浏览器里查看。虽然有的网页有导出功能，但是一方面手动导出并在另一台设备覆盖的步骤较为复杂，另一方面很容易忘记</p>
+<h1 id="解决方案：Tampermonkey-用户脚本"><a href="#解决方案：Tampermonkey-用户脚本" class="headerlink" title="解决方案：Tampermonkey 用户脚本"></a>解决方案：Tampermonkey 用户脚本</h1><h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><ul>
+<li><strong>数据存储</strong>：<code>localStorage</code>（设置）+ <code>IndexedDB/Dexie</code>（聊天记录等主数据）</li>
+<li><strong>方案</strong>：Tampermonkey 用户脚本，注入悬浮面板，使用坚果云 WebDAV 同步</li>
+<li><strong>命名逻辑</strong>：本地文件用文件名，在线网站用域名+路径</li>
+</ul>
+<h2 id="坚果云相关设置"><a href="#坚果云相关设置" class="headerlink" title="坚果云相关设置"></a>坚果云相关设置</h2><p>1.设置-第三方应用管理</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86.png" class="">
+
+<p>2.添加应用密码<br>按照顺序往下操作即可，会生成一个16字符的密码，需要记住这个自己设定的应用名称和随机生成的密码</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E6%B7%BB%E5%8A%A0%E5%BA%94%E7%94%A8%E5%AF%86%E7%A0%81.png" class="">
+<h2 id="Tampermonkey脚本相关设置"><a href="#Tampermonkey脚本相关设置" class="headerlink" title="Tampermonkey脚本相关设置"></a>Tampermonkey脚本相关设置</h2><p>1.安装浏览器插件并启用</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E7%AF%A1%E6%94%B9%E7%8C%B4.png" class="">
+<p>2.插件设置<br>需要打开允许用户脚本，打开允许访问文件url（如果没有在本地文件上使用的需求这个就不用开）</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E5%85%81%E8%AE%B8%E8%AE%BF%E9%97%AE%E6%96%87%E4%BB%B6URL.png" class="">
+<p>3.如何新建用户脚本<br>在插件列表点击插件，选择添加新脚本</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E6%B7%BB%E5%8A%A0%E6%96%B0%E8%84%9A%E6%9C%AC.png" class="">
+
+<p>将<a target="_blank" rel="noopener" href="https://github.com/zhimaheiye/zaqizaba/blob/main/universal_sync.user.js">universal_sync.user.js</a>文件内容全部覆盖粘贴后ctrl+S保存</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E4%BF%9D%E5%AD%98%E6%96%B0%E8%84%9A%E6%9C%AC.png" class="">
+
+<p>即可看到已安装的脚本</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E5%AE%89%E8%A3%85%E5%A5%BD%E7%9A%84%E8%84%9A%E6%9C%AC.png" class="">
+
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>1.点击悬浮窗，在设置页面填写坚果云账号和生成的密码<br>注意这个密码不是坚果云账号的密码，而是webdev同步的密码</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E9%85%8D%E7%BD%AE%E5%9D%9A%E6%9E%9C%E4%BA%91%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81.png" class="">
+
+<p>2.上传与恢复</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E4%B8%8A%E4%BC%A0%E5%BD%93%E5%89%8D%E7%BC%93%E5%AD%98%E8%87%B3%E4%BA%91%E7%AB%AF.png" class="">
+
+
+<p>点击恢复数据后会自动刷新网页进行加载</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E4%BB%8E%E4%BA%91%E7%AB%AF%E8%A6%86%E7%9B%96%E6%81%A2%E5%A4%8D%E6%9C%AC%E5%9C%B0.png" class="">
+
+<h1 id="仍存在的问题"><a href="#仍存在的问题" class="headerlink" title="仍存在的问题"></a>仍存在的问题</h1><ol>
+<li>目前是使用手动同步的方式，有时候会忘记。如果采用类似obsidian的同步插件remotely save那种五分钟自动同步一次的方式就好了。但是由于应用场景不是很重要，暂时还是使用手动同步</li>
+<li>测试的链接&#x2F;文件较少，后续如果有新的需求和问题会继续改</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/" data-id="cuidNSchD3TZJolGDXoTIQOSL" data-title="多设备同步浏览器缓存" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/04/28/Mumu%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E6%A3%80%E6%B5%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mumu模拟器开机自启动检测</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obsidian/" rel="tag">obsidian</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/obsidian/" style="font-size: 10px;">obsidian</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">May 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">February 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/">多设备同步浏览器缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/28/Mumu%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E6%A3%80%E6%B5%8B/">Mumu模拟器开机自启动检测</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/23/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E4%B8%8Eobsidian%E9%80%82%E9%85%8D/">博客配置与obsidian适配</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/21/obsidian%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E7%BC%93%E6%85%A2%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/">obsidian使用技巧（缓慢更新中）</a>
+          </li>
+        
+          <li>
+            <a href="/2026/03/07/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8F%96%E8%BE%93%E5%85%A5%E6%B3%95%E8%BE%93%E5%87%BA/">本地抓取输入法输出</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -71,10 +71,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-obsidian仓库更新日志" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-多设备同步浏览器缓存" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2026/04/29/obsidian%E4%BB%93%E5%BA%93%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/" class="article-date">
-  <time class="dt-published" datetime="2026-04-28T16:00:00.000Z" itemprop="datePublished">2026-04-29</time>
+    <a href="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/" class="article-date">
+  <time class="dt-published" datetime="2026-05-31T00:00:00.000Z" itemprop="datePublished">2026-05-31</time>
 </a>
     
   </div>
@@ -85,7 +85,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/04/29/obsidian%E4%BB%93%E5%BA%93%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/">obsidian仓库更新日志</a>
+      <a class="p-name article-title" href="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/">多设备同步浏览器缓存</a>
     </h1>
   
 
@@ -93,34 +93,52 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="2026-04-29"><a href="#2026-04-29" class="headerlink" title="2026-04-29"></a>2026-04-29</h1><p>学习使用yaml属性而不是文件夹对笔记进行管理<br>原先的文件夹结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">电影</span><br><span class="line">  ├── 电影1</span><br><span class="line">  └── 电影2</span><br><span class="line">电视剧</span><br><span class="line">  ├── 电视剧1</span><br><span class="line">  └── 电视剧2</span><br></pre></td></tr></table></figure>
-<p>现在的文件夹结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">影视作品1.md</span><br><span class="line">影视作品2.md</span><br><span class="line">影视作品3.md</span><br><span class="line">影视作品4.md</span><br></pre></td></tr></table></figure>
-<p>md文件内使用type对文件的类型进行标注，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">type: 电影</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>原因是相比于电影&#x2F;电视剧&#x2F;动画片&#x2F;综艺这种分类方式，统一认为它们是视频这个媒介然后按照内容打标签进行分类更合适</p>
-<h1 id="2026-04-30"><a href="#2026-04-30" class="headerlink" title="2026-04-30"></a>2026-04-30</h1><p>试图通过ai编辑器来批量做判断并录入笔记但是失败了，一段简短的提示词并不足以让ai一次性写出我想要的东西。<br>例如我的需求是，通过自然语言描述待办任务，让ai按照我提供的模板判断并填入内容</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">把我下面发给你的用自然语言描述的任务，对于每个任务新建单独的md文件放在当前目录下，除了yaml属性以外，需要对任务进行拆分，对我目前的进度和后续要做的事情进行带有复选框的表述（例如需要五个步骤，我已经完成了其中的两个。obsidian中复选框的语法为- [ ] ）,其中时间这一项需要是阿拉伯数字，以分钟为单位，如果没有具体的时间分配则留空，或者使用“启动这个任务所需的第一件事”所需时间（注意时间的单位是分钟，你只需提供一个类似30、60这样的数字，不要有额外的东西）</span><br></pre></td></tr></table></figure>
+        <h1 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h1><p>在不同设备打开静态网页的时候，会填写数据，但是这些数据缓存在浏览器里，只能在这个设备的这个浏览器里查看。虽然有的网页有导出功能，但是一方面手动导出并在另一台设备覆盖的步骤较为复杂，另一方面很容易忘记</p>
+<h1 id="解决方案：Tampermonkey-用户脚本"><a href="#解决方案：Tampermonkey-用户脚本" class="headerlink" title="解决方案：Tampermonkey 用户脚本"></a>解决方案：Tampermonkey 用户脚本</h1><h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><ul>
+<li><strong>数据存储</strong>：<code>localStorage</code>（设置）+ <code>IndexedDB/Dexie</code>（聊天记录等主数据）</li>
+<li><strong>方案</strong>：Tampermonkey 用户脚本，注入悬浮面板，使用坚果云 WebDAV 同步</li>
+<li><strong>命名逻辑</strong>：本地文件用文件名，在线网站用域名+路径</li>
+</ul>
+<h2 id="坚果云相关设置"><a href="#坚果云相关设置" class="headerlink" title="坚果云相关设置"></a>坚果云相关设置</h2><p>1.设置-第三方应用管理</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E7%AE%A1%E7%90%86.png" class="">
 
-<p>出现的问题包括但不限于：</p>
-<ol>
-<li>在我已经说明时间单位为分钟的情况下出现”半小时“、”一天“这样的描述，会导致格式混乱</li>
-<li>对任务的拆分太花哨了，还需要优化（以及gemini对在分级标题前面插入emoji真是有种莫名的执念……）</li>
-<li>在对于投入产出进行文字表述时过于个性化，无法统一分类筛选（例如我希望的是：做这个任务需要电脑，那我就可以在自己方便使用电脑的时候进行此类任务的筛选，ai会写成做任务的脑力、试错的经验等等抽象的东西）</li>
+<p>2.添加应用密码<br>按照顺序往下操作即可，会生成一个16字符的密码，需要记住这个自己设定的应用名称和随机生成的密码</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E6%B7%BB%E5%8A%A0%E5%BA%94%E7%94%A8%E5%AF%86%E7%A0%81.png" class="">
+<h2 id="Tampermonkey脚本相关设置"><a href="#Tampermonkey脚本相关设置" class="headerlink" title="Tampermonkey脚本相关设置"></a>Tampermonkey脚本相关设置</h2><p>1.安装浏览器插件并启用</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E7%AF%A1%E6%94%B9%E7%8C%B4.png" class="">
+<p>2.插件设置<br>需要打开允许用户脚本，打开允许访问文件url（如果没有在本地文件上使用的需求这个就不用开）</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E5%85%81%E8%AE%B8%E8%AE%BF%E9%97%AE%E6%96%87%E4%BB%B6URL.png" class="">
+<p>3.如何新建用户脚本<br>在插件列表点击插件，选择添加新脚本</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E6%B7%BB%E5%8A%A0%E6%96%B0%E8%84%9A%E6%9C%AC.png" class="">
+
+<p>将<a target="_blank" rel="noopener" href="https://github.com/zhimaheiye/zaqizaba/blob/main/universal_sync.user.js">universal_sync.user.js</a>文件内容全部覆盖粘贴后ctrl+S保存</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E4%BF%9D%E5%AD%98%E6%96%B0%E8%84%9A%E6%9C%AC.png" class="">
+
+<p>即可看到已安装的脚本</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E5%AE%89%E8%A3%85%E5%A5%BD%E7%9A%84%E8%84%9A%E6%9C%AC.png" class="">
+
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>1.点击悬浮窗，在设置页面填写坚果云账号和生成的密码<br>注意这个密码不是坚果云账号的密码，而是webdev同步的密码</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E9%85%8D%E7%BD%AE%E5%9D%9A%E6%9E%9C%E4%BA%91%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81.png" class="">
+
+<p>2.上传与恢复</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E4%B8%8A%E4%BC%A0%E5%BD%93%E5%89%8D%E7%BC%93%E5%AD%98%E8%87%B3%E4%BA%91%E7%AB%AF.png" class="">
+
+
+<p>点击恢复数据后会自动刷新网页进行加载</p>
+<img src="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/%E4%BB%8E%E4%BA%91%E7%AB%AF%E8%A6%86%E7%9B%96%E6%81%A2%E5%A4%8D%E6%9C%AC%E5%9C%B0.png" class="">
+
+<h1 id="仍存在的问题"><a href="#仍存在的问题" class="headerlink" title="仍存在的问题"></a>仍存在的问题</h1><ol>
+<li>目前是使用手动同步的方式，有时候会忘记。如果采用类似obsidian的同步插件remotely save那种五分钟自动同步一次的方式就好了。但是由于应用场景不是很重要，暂时还是使用手动同步</li>
+<li>测试的链接&#x2F;文件较少，后续如果有新的需求和问题会继续改</li>
 </ol>
-<p>目前暂时使用的方式是对现有的分类维度创建并插入模板，进行快速选择，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">status: 未开始/进行中/已完成/暂时搁置</span><br><span class="line">所属领域: 工作/学习/生活/创作</span><br><span class="line">是否清楚流程: 是/否</span><br><span class="line">预估耗时:</span><br><span class="line">ddl:</span><br><span class="line">没有截止日期但越早越好: 是/否</span><br><span class="line">是否为循环任务: 是/否</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/04/29/obsidian%E4%BB%93%E5%BA%93%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/" data-id="cuidyBsVRlKAar_NpIEcoPfgG" data-title="obsidian仓库更新日志" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/" data-id="cuidNSchD3TZJolGDXoTIQOSL" data-title="多设备同步浏览器缓存" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/obsidian/" rel="tag">obsidian</a></li></ul>
-
     </footer>
   </div>
   
@@ -207,7 +225,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/04/28/Mumu%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E6%A3%80%E6%B5%8B/" data-id="cuidxuypoQkmN0nDXRzmJTxgc" data-title="Mumu模拟器开机自启动检测" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/04/28/Mumu%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E6%A3%80%E6%B5%8B/" data-id="cuidAfFCAa15pK2qF1EGZO557" data-title="Mumu模拟器开机自启动检测" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -275,7 +293,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/03/23/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E4%B8%8Eobsidian%E9%80%82%E9%85%8D/" data-id="cuidNAe6JnE94XAQHMrkA5NHY" data-title="博客配置与obsidian适配" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/03/23/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E4%B8%8Eobsidian%E9%80%82%E9%85%8D/" data-id="cuidxETOwn6ZFK_1zYR-yMSQc" data-title="博客配置与obsidian适配" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -334,7 +352,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/03/21/obsidian%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E7%BC%93%E6%85%A2%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/" data-id="cuidpdIez0Ph9fC-WudKbuVQg" data-title="obsidian使用技巧（缓慢更新中）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/03/21/obsidian%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%EF%BC%88%E7%BC%93%E6%85%A2%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/" data-id="cuidvPdbKm8OtyPpphTnA34i0" data-title="obsidian使用技巧（缓慢更新中）" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -499,7 +517,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/03/07/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8F%96%E8%BE%93%E5%85%A5%E6%B3%95%E8%BE%93%E5%87%BA/" data-id="cuidi5zamVtA46dkIq9v8e2MO" data-title="本地抓取输入法输出" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/03/07/%E6%9C%AC%E5%9C%B0%E6%8A%93%E5%8F%96%E8%BE%93%E5%85%A5%E6%B3%95%E8%BE%93%E5%87%BA/" data-id="cuid7ElEhinq-YDSeN9u4Y64a" data-title="本地抓取输入法输出" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -587,7 +605,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/02/28/docker%E9%83%A8%E7%BD%B2%E7%94%B5%E5%AD%90%E6%97%B6%E9%92%9F%E7%BD%91%E9%A1%B5/" data-id="cuid1IKgPYDcWeSqxZRxTlbBM" data-title="docker部署电子时钟网页" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/02/28/docker%E9%83%A8%E7%BD%B2%E7%94%B5%E5%AD%90%E6%97%B6%E9%92%9F%E7%BD%91%E9%A1%B5/" data-id="cuid_CKt6VPrWz3y1qHOqkjeG" data-title="docker部署电子时钟网页" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -667,7 +685,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zhimaheiye.github.io/2026/01/18/%E8%87%AA%E5%8A%A8%E6%8A%93%E5%8F%96%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E6%B4%BB%E5%8A%A8/" data-id="cuidAZgalT7aDeKJj1jaHV1_t" data-title="自动抓取明日方舟活动" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://zhimaheiye.github.io/2026/01/18/%E8%87%AA%E5%8A%A8%E6%8A%93%E5%8F%96%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E6%B4%BB%E5%8A%A8/" data-id="cuidtaKaoJElmwhzZAnPdeLyD" data-title="自动抓取明日方舟活动" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -702,7 +720,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/obsidian/" style="font-size: 20px;">obsidian</a>
+      <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/obsidian/" style="font-size: 10px;">obsidian</a>
     </div>
   </div>
 
@@ -711,7 +729,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">February 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">May 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">February 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li></ul>
     </div>
   </div>
 
@@ -724,7 +742,7 @@
       <ul>
         
           <li>
-            <a href="/2026/04/29/obsidian%E4%BB%93%E5%BA%93%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/">obsidian仓库更新日志</a>
+            <a href="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/">多设备同步浏览器缓存</a>
           </li>
         
           <li>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>自动关机拦截脚本 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="需求描述偶尔会有这样的情况：刚关机然后想起来自己有个事情没做，会希望能够自启动一个关机拦截脚本,且这个脚本还能显示文字提示(例如”今日待办是否归档”) 需要使用的软件 AutoHotkey  代码及注释123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动关机拦截脚本">
+<meta property="og:url" content="https://zhimaheiye.github.io/2026/06/02/%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA%E6%8B%A6%E6%88%AA%E8%84%9A%E6%9C%AC/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="需求描述偶尔会有这样的情况：刚关机然后想起来自己有个事情没做，会希望能够自启动一个关机拦截脚本,且这个脚本还能显示文字提示(例如”今日待办是否归档”) 需要使用的软件 AutoHotkey  代码及注释123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-06-02T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-09T13:30:32.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://zhimaheiye.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-自动关机拦截脚本" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/06/02/%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA%E6%8B%A6%E6%88%AA%E8%84%9A%E6%9C%AC/" class="article-date">
+  <time class="dt-published" datetime="2026-06-02T00:00:00.000Z" itemprop="datePublished">2026-06-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      自动关机拦截脚本
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h1><p>偶尔会有这样的情况：刚关机然后想起来自己有个事情没做，会希望能够自启动一个关机拦截脚本,且这个脚本还能显示文字提示(例如”今日待办是否归档”)</p>
+<h1 id="需要使用的软件"><a href="#需要使用的软件" class="headerlink" title="需要使用的软件"></a>需要使用的软件</h1><ul>
+<li><strong>AutoHotkey</strong></li>
+</ul>
+<h1 id="代码及注释"><a href="#代码及注释" class="headerlink" title="代码及注释"></a>代码及注释</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line">; ========================================================</span><br><span class="line">;  【第一部分】自动提权：强制脚本以管理员身份运行</span><br><span class="line">;  因为阻止关机需要管理员权限，普通权限不会生效</span><br><span class="line">; ========================================================</span><br><span class="line"></span><br><span class="line">; 获取当前进程的完整命令行字符串（包含 exe 路径和所有参数）</span><br><span class="line">full_command_line := DllCall(&quot;GetCommandLine&quot;, &quot;str&quot;)</span><br><span class="line"></span><br><span class="line">; 判断条件：</span><br><span class="line">;   A_IsAdmin —— 已经是管理员吗？</span><br><span class="line">;   RegExMatch —— 命令行里已经有 /restart 参数吗？（防止无限循环提权）</span><br><span class="line">;   如果两个条件都不满足，说明需要提权</span><br><span class="line">if not (A_IsAdmin or RegExMatch(full_command_line, &quot; /restart(?!\S)&quot;))</span><br><span class="line">&#123;</span><br><span class="line">    try  ; 用 try 包裹，避免权限不足时脚本崩溃</span><br><span class="line">    &#123;</span><br><span class="line">        if A_IsCompiled</span><br><span class="line">            ; 如果是编译后的 .exe，直接用 RunAs 以管理员身份重新运行自身</span><br><span class="line">            Run &#x27;*RunAs &quot;&#x27; A_ScriptFullPath &#x27;&quot; /restart&#x27;</span><br><span class="line">        else</span><br><span class="line">            ; 如果是 .ahk 脚本，用 RunAs 以管理员身份重新运行 AutoHotkey.exe 来执行脚本</span><br><span class="line">            Run &#x27;*RunAs &quot;&#x27; A_AhkPath &#x27;&quot; /restart &quot;&#x27; A_ScriptFullPath &#x27;&quot;&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">    ; 当前（低权限）实例退出，由新启动的高权限实例接管</span><br><span class="line">    ExitApp</span><br><span class="line">&#125;</span><br><span class="line">; ========================================================</span><br><span class="line"></span><br><span class="line">; --- 脚本基本配置 ---</span><br><span class="line"></span><br><span class="line">; 要求 AutoHotkey v2.0 语法（v1 语法不兼容此脚本）</span><br><span class="line">#Requires AutoHotkey v2.0</span><br><span class="line"></span><br><span class="line">; 同一时间只运行一个实例，新启动会替换旧的</span><br><span class="line">#SingleInstance Force</span><br><span class="line"></span><br><span class="line">; 让脚本常驻后台（不设置的话执行完就退出了）</span><br><span class="line">Persistent</span><br><span class="line"></span><br><span class="line">; ========================================================</span><br><span class="line">;  【第二部分】关机拦截核心逻辑</span><br><span class="line">;  原理：监听 Windows 发送的关机询问消息，在收到时弹出确认框</span><br><span class="line">; ========================================================</span><br><span class="line"></span><br><span class="line">; 注册消息监听：0x11 = WM_QUERYENDSESSION</span><br><span class="line">; 当用户点击关机/重启时，Windows 会向所有顶层窗口依次发送这个消息</span><br><span class="line">; 如果有程序返回 0（false），关机流程就会被阻止</span><br><span class="line">OnMessage(0x11, OnShutdown)</span><br><span class="line"></span><br><span class="line">; --- 关机消息处理函数 ---</span><br><span class="line">; 参数说明：</span><br><span class="line">;   wParam — 关机原因标志位</span><br><span class="line">;   lParam — 附加关机选项标志位</span><br><span class="line">;   msg    — 消息 ID（这里是 0x11）</span><br><span class="line">;   hwnd   — 接收到消息的窗口句柄（即 AHK 脚本的隐藏窗口）</span><br><span class="line">; 返回值：0 = 阻止关机，非 0 = 允许关机</span><br><span class="line">OnShutdown(wParam, lParam, msg, hwnd) &#123;</span><br><span class="line">    ; 【步骤1】向 Windows 注册一个&quot;阻止关机的理由&quot;</span><br><span class="line">    ;         Windows 关机界面会显示这个文字，让你知道是哪个程序拦住了关机</span><br><span class="line">    ;         必须管理员权限这个 API 调用才有效</span><br><span class="line">    ShutdownBlockReasonCreate(A_ScriptHwnd, &quot;收尾工作是否完成...&quot;)</span><br><span class="line"></span><br><span class="line">    ; 【步骤2】弹出一个模态确认对话框</span><br><span class="line">    ;         MsgBox 参数：</span><br><span class="line">    ;           4     = Yes/No 按钮</span><br><span class="line">    ;           32    = 问号图标</span><br><span class="line">    ;           4096  = 置顶（始终在最前，不会被其他窗口盖住）</span><br><span class="line">    ;         这会阻塞 AHK 线程，Windows 会等待该窗口响应</span><br><span class="line">    Result := MsgBox(</span><br><span class="line">        &quot;⚠️ 关机拦截确认`n`n是否已【归档任务清单】？`n`n&quot;</span><br><span class="line">        . &quot;按【是 (Yes)】-&gt; 确认已归档，允许关机`n&quot;</span><br><span class="line">        . &quot;按【否 (No)】-&gt; 还没做，撤回关机&quot;,</span><br><span class="line">        &quot;关机守门员&quot;,</span><br><span class="line">        4 + 32 + 4096</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    ; 【步骤3】根据用户选择决定是否放行</span><br><span class="line">    if (Result = &quot;No&quot;) &#123;</span><br><span class="line">        ; 用户点了&quot;否&quot;——还要做事，阻止关机</span><br><span class="line">        ShutdownBlockReasonDestroy(A_ScriptHwnd)  ; 清除阻止理由</span><br><span class="line">        return 0  ; 【关键】返回 0 = 告诉 Windows 不允许关机！</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ; 用户点了&quot;是&quot;——确认完毕，允许关机</span><br><span class="line">    ShutdownBlockReasonDestroy(A_ScriptHwnd)  ; 清除阻止理由</span><br><span class="line">    return 1  ; 返回非 0 = 告诉 Windows 可以关机</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">; ========================================================</span><br><span class="line">;  【第三部分】Windows API 封装函数</span><br><span class="line">;  将原生 DllCall 包装成便于调用的函数</span><br><span class="line">; ========================================================</span><br><span class="line"></span><br><span class="line">; ShutdownBlockReasonCreate — 向系统注册关机阻止理由</span><br><span class="line">;   hWnd   : 发起阻止的窗口句柄（传 AHK 脚本自己的隐藏窗口即可）</span><br><span class="line">;   Reason : 显示在关机界面上的提示文字</span><br><span class="line">;   这个 API 是 Windows Vista+ 新增的，用于替代旧的 WM_QUERYENDSESSION 返回方式</span><br><span class="line">ShutdownBlockReasonCreate(hWnd, Reason) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        DllCall(&quot;User32\ShutdownBlockReasonCreate&quot;, &quot;Ptr&quot;, hWnd, &quot;Str&quot;, Reason)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">; ShutdownBlockReasonDestroy — 移除之前注册的关机阻止理由</span><br><span class="line">;   在放行或取消阻止时必须调用，否则理由会残留在系统里</span><br><span class="line">ShutdownBlockReasonDestroy(hWnd) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        DllCall(&quot;User32\ShutdownBlockReasonDestroy&quot;, &quot;Ptr&quot;, hWnd)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="暂时弃用的原因"><a href="#暂时弃用的原因" class="headerlink" title="暂时弃用的原因"></a>暂时弃用的原因</h1><p>查看了一下文件日期,这个脚本是3.8配置好的,截至写这篇博客的时候一次都没有成功生效过,为数不多的几次,我刚关机了想到还有个事情没做,脚本必定不生效。反耳呢，我不需要用它的时候,有几次因为这个脚本导致电脑没成功关机,自己放电到没电关机。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zhimaheiye.github.io/2026/06/02/%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA%E6%8B%A6%E6%88%AA%E8%84%9A%E6%9C%AC/" data-id="cuidg9IjbgE1xOa9ZG4yFLYsy" data-title="自动关机拦截脚本" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/06/08/ai%E8%81%8A%E5%A4%A9%E8%A1%A8%E6%83%85%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ai聊天表情包管理工具
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">多设备同步浏览器缓存</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obsidian/" rel="tag">obsidian</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/obsidian/" style="font-size: 20px;">obsidian</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">June 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">May 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">February 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/06/08/ai%E8%81%8A%E5%A4%A9%E8%A1%A8%E6%83%85%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">ai聊天表情包管理工具</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/02/%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA%E6%8B%A6%E6%88%AA%E8%84%9A%E6%9C%AC/">自动关机拦截脚本</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/">多设备同步浏览器缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/29/obsidian%E4%BB%93%E5%BA%93%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/">obsidian仓库更新日志</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/28/Mumu%E6%A8%A1%E6%8B%9F%E5%99%A8%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E6%A3%80%E6%B5%8B/">Mumu模拟器开机自启动检测</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

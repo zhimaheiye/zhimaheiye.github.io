@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>quicker脚本-复用gemini的语音输入 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="需求描述我在使用AI的过程中，很多时候比起打字，我更喜欢直接说话。但是不同 AI 的语音输入体验差距还挺大的。对我来说，Gemini 的语音识别效果更好，但是我平时真正长时间使用、进行项目讨论和日常聊天的地方又主要是 ChatGPT。 如果我想用 Gemini 来做语音识别，需要：  切换到 Gemini； 开启语音输入； 说完之后结束录音； 复制识别出来的文字； 再切回 ChatGPT； 粘贴进">
+<meta property="og:type" content="article">
+<meta property="og:title" content="quicker脚本-复用gemini的语音输入">
+<meta property="og:url" content="https://zhimaheiye.github.io/2026/09/24/quicker%E8%84%9A%E6%9C%AC-%E5%A4%8D%E7%94%A8gemini%E7%9A%84%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="需求描述我在使用AI的过程中，很多时候比起打字，我更喜欢直接说话。但是不同 AI 的语音输入体验差距还挺大的。对我来说，Gemini 的语音识别效果更好，但是我平时真正长时间使用、进行项目讨论和日常聊天的地方又主要是 ChatGPT。 如果我想用 Gemini 来做语音识别，需要：  切换到 Gemini； 开启语音输入； 说完之后结束录音； 复制识别出来的文字； 再切回 ChatGPT； 粘贴进">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-09-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-24T06:54:25.253Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="quicker">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://zhimaheiye.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-quicker脚本-复用gemini的语音输入" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/09/24/quicker%E8%84%9A%E6%9C%AC-%E5%A4%8D%E7%94%A8gemini%E7%9A%84%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5/" class="article-date">
+  <time class="dt-published" datetime="2026-09-23T16:00:00.000Z" itemprop="datePublished">2026-09-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      quicker脚本-复用gemini的语音输入
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h1><p>我在使用AI的过程中，很多时候比起打字，我更喜欢直接说话。但是不同 AI 的语音输入体验差距还挺大的。对我来说，Gemini 的语音识别效果更好，但是我平时真正长时间使用、进行项目讨论和日常聊天的地方又主要是 ChatGPT。</p>
+<p>如果我想用 Gemini 来做语音识别，需要：</p>
+<ol>
+<li>切换到 Gemini；</li>
+<li>开启语音输入；</li>
+<li>说完之后结束录音；</li>
+<li>复制识别出来的文字；</li>
+<li>再切回 ChatGPT；</li>
+<li>粘贴进去。</li>
+</ol>
+<p>单次操作其实没有多麻烦，但因为这是一个非常高频的动作，每次都做一遍就很烦。</p>
+<p>所以我的目标是：</p>
+<blockquote>
+<p>无论我当前在哪个输入框，只要触发一个快捷键，就自动切到 Gemini 开始语音识别；说完后按一下结束键，自动把识别结果复制回来。</p>
+</blockquote>
+<p>最终我希望把启动动作绑定到一个自定义键盘的独立按键上。</p>
+<p>这样以后整个交互就会变成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">按一下启动键</span><br><span class="line">→ 说话</span><br><span class="line">→ 按一下结束键</span><br><span class="line">→ 自动回到原来的窗口并粘贴识别文字</span><br><span class="line">````</span><br><span class="line"></span><br><span class="line"># 具体实现</span><br><span class="line"></span><br><span class="line">我最后选择用 [Quicker](https://getquicker.net/) 来实现。</span><br><span class="line"></span><br><span class="line">所以整个流程可以拆成：</span><br><span class="line"></span><br><span class="line">```text</span><br><span class="line">记录当前窗口</span><br><span class="line">→ 找到 Gemini</span><br><span class="line">→ 切换到 Gemini</span><br><span class="line">→ 清空 Gemini 输入框</span><br><span class="line">→ 启动语音输入</span><br><span class="line">→ 等待我按 F8</span><br><span class="line">→ 结束语音输入</span><br><span class="line">→ 获取识别结果</span><br><span class="line">→ 清空 Gemini</span><br><span class="line">→ 回到原来的窗口</span><br><span class="line">→ 粘贴</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Quicker-动作下载"><a href="#Quicker-动作下载" class="headerlink" title="Quicker 动作下载"></a>Quicker 动作下载</h1><p>为了省掉从头照着文章配置的过程，把最终使用的 Quicker 动作导出后放到了 GitHub。<br><a target="_blank" rel="noopener" href="https://github.com/zhimaheiye/zaqizaba/blob/main/quicker/Gemini%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5.qka">https://github.com/zhimaheiye/zaqizaba/blob/main/quicker/Gemini%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5.qka</a><br>下载以后，在 Quicker 中将动作导入即可。</p>
+<p>如果想学习理解这个流程设计以及操作过程，可以往下看。<br>PS：是chatgpt写的</p>
+<h2 id="步骤拆解"><a href="#步骤拆解" class="headerlink" title="步骤拆解"></a>步骤拆解</h2><h3 id="1-保存原来的窗口"><a href="#1-保存原来的窗口" class="headerlink" title="1.保存原来的窗口"></a>1.保存原来的窗口</h3><p>第一步需要记录我启动动作时正在使用哪个窗口。</p>
+<p>这样后面无论是从 ChatGPT、Obsidian，还是其他输入框启动，都可以在语音识别结束以后回到原来的地方。</p>
+<p>我在 Quicker 里建立了两个整数变量：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sourceHwnd</span><br><span class="line">geminiHwnd</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><p><code>sourceHwnd</code>：启动动作时的前台窗口；</p>
+</li>
+<li><p><code>geminiHwnd</code>：Gemini 所在的 Chrome 窗口。</p>
+</li>
+</ul>
+<p>先通过「获取窗口信息 &#x2F; 查找窗口」保存当前前台窗口：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当前前台窗口 → sourceHwnd</span><br></pre></td></tr></table></figure>
+
+<p>然后再查找 Gemini 的 Chrome 顶层窗口，把句柄保存到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">geminiHwnd</span><br></pre></td></tr></table></figure>
+
+<p>最后使用窗口操作，把 Gemini 设置成前台窗口。</p>
+<p>这里有一个需要注意的地方：</p>
+<p>Quicker 的窗口句柄参数需要使用表达式，而不是直接输入变量名字。</p>
+<p>例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$= &#123;geminiHwnd&#125;</span><br></pre></td></tr></table></figure>
+
+<p>返回原窗口时则是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$= &#123;sourceHwnd&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-为什么不能直接用-Ctrl-A-Ctrl-C"><a href="#2-为什么不能直接用-Ctrl-A-Ctrl-C" class="headerlink" title="2.为什么不能直接用 Ctrl+A &#x2F; Ctrl+C"></a>2.为什么不能直接用 Ctrl+A &#x2F; Ctrl+C</h3><p>一开始最自然的想法是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">语音识别结束</span><br><span class="line">→ 点击 Gemini 输入框</span><br><span class="line">→ Ctrl+A</span><br><span class="line">→ Ctrl+C</span><br></pre></td></tr></table></figure>
+
+<p>但是实际使用以后发现这个方法并不稳定。</p>
+<p>Gemini 的窗口可能会：</p>
+<ul>
+<li><p>改变大小；</p>
+</li>
+<li><p>关闭后重新打开；</p>
+</li>
+<li><p>页面布局发生变化；</p>
+</li>
+<li><p>浏览器缩放发生变化。</p>
+</li>
+</ul>
+<p>所以固定鼠标坐标并不可靠。</p>
+<p>而如果输入框没有正确获得焦点，<code>Ctrl+A</code> 还会直接选中整个 Gemini 网页。</p>
+<p>复制出来的结果会变成类似：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Google Gemini</span><br><span class="line">需要我为你做些什么？</span><br><span class="line">测试一下语音输入。</span><br><span class="line">Gemini 已停止听取</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+
+<p>而不是只有我刚才说的那句话。</p>
+<p>因此最后没有继续使用“鼠标坐标 + Ctrl+A”的方案，而是直接让 Quicker 控制 Chrome，通过 JavaScript 操作 Gemini 的 DOM。</p>
+<h3 id="3-让-Quicker-连接-Chrome"><a href="#3-让-Quicker-连接-Chrome" class="headerlink" title="3.让 Quicker 连接 Chrome"></a>3.让 Quicker 连接 Chrome</h3><p>我的系统默认浏览器是 Edge，但 Gemini 单独开在 Chrome 中。</p>
+<p>因此我在动作中先增加了一个：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">浏览器控制</span><br><span class="line">→ 设置连接的浏览器</span><br><span class="line">→ Google Chrome</span><br></pre></td></tr></table></figure>
+
+<p>这样后面的网页脚本都会明确发送给 Chrome，而不是跟随 Windows 的默认浏览器。</p>
+<h3 id="4-开始录音前清空-Gemini-输入框"><a href="#4-开始录音前清空-Gemini-输入框" class="headerlink" title="4.开始录音前清空 Gemini 输入框"></a>4.开始录音前清空 Gemini 输入框</h3><p>这里需要解决一个问题：</p>
+<p>如果上一次语音识别留下的文字没有清掉，那么下一次录音的内容可能会直接接在旧文字后面。</p>
+<p>所以每次启动语音输入之前，我都会先让 JavaScript 找到 Gemini 底部真正的文本输入框，并清空里面的内容。</p>
+<p>Browser Control 中执行的脚本如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">findGeminiInput</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> els = [...<span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(</span><br><span class="line">            <span class="string">&#x27;[contenteditable=&quot;true&quot;], [role=&quot;textbox&quot;]&#x27;</span></span><br><span class="line">        )].<span class="title function_">filter</span>(<span class="function"><span class="params">el</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (!el.<span class="property">isContentEditable</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">const</span> r = el.<span class="title function_">getBoundingClientRect</span>();</span><br><span class="line">            <span class="keyword">const</span> s = <span class="title function_">getComputedStyle</span>(el);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> (</span><br><span class="line">                r.<span class="property">width</span> &gt; <span class="number">200</span> &amp;&amp;</span><br><span class="line">                r.<span class="property">height</span> &gt; <span class="number">20</span> &amp;&amp;</span><br><span class="line">                r.<span class="property">bottom</span> &gt; <span class="variable language_">window</span>.<span class="property">innerHeight</span> * <span class="number">0.55</span> &amp;&amp;</span><br><span class="line">                r.<span class="property">top</span> &lt; <span class="variable language_">window</span>.<span class="property">innerHeight</span> &amp;&amp;</span><br><span class="line">                s.<span class="property">display</span> !== <span class="string">&#x27;none&#x27;</span> &amp;&amp;</span><br><span class="line">                s.<span class="property">visibility</span> !== <span class="string">&#x27;hidden&#x27;</span></span><br><span class="line">            );</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        els.<span class="title function_">sort</span>(</span><br><span class="line">            <span class="function">(<span class="params">a, b</span>) =&gt;</span></span><br><span class="line">                b.<span class="title function_">getBoundingClientRect</span>().<span class="property">bottom</span> -</span><br><span class="line">                a.<span class="title function_">getBoundingClientRect</span>().<span class="property">bottom</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> els[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> el = <span class="title function_">findGeminiInput</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!el) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;未找到 Gemini 输入框&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    el.<span class="title function_">focus</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> range = <span class="variable language_">document</span>.<span class="title function_">createRange</span>();</span><br><span class="line">    range.<span class="title function_">selectNodeContents</span>(el);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> sel = <span class="variable language_">window</span>.<span class="title function_">getSelection</span>();</span><br><span class="line">    sel.<span class="title function_">removeAllRanges</span>();</span><br><span class="line">    sel.<span class="title function_">addRange</span>(range);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">execCommand</span>(<span class="string">&#x27;delete&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    el.<span class="title function_">dispatchEvent</span>(<span class="keyword">new</span> <span class="title class_">InputEvent</span>(<span class="string">&#x27;input&#x27;</span>, &#123;</span><br><span class="line">        <span class="attr">bubbles</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">inputType</span>: <span class="string">&#x27;deleteContentBackward&#x27;</span>,</span><br><span class="line">        <span class="attr">data</span>: <span class="literal">null</span></span><br><span class="line">    &#125;));</span><br><span class="line"></span><br><span class="line">    <span class="literal">true</span>;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<p>这里没有依赖 Gemini 某个容易变化的 class 名，而是从页面里寻找：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">contenteditable=&quot;true&quot;</span><br><span class="line">role=&quot;textbox&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后再按照：</p>
+<ul>
+<li><p>是否可见；</p>
+</li>
+<li><p>大小；</p>
+</li>
+<li><p>是否位于页面下半部分；</p>
+</li>
+<li><p>距离页面底部的位置；</p>
+</li>
+</ul>
+<p>筛选出最符合 Gemini 输入框特征的元素。</p>
+<p>这样窗口大小发生变化以后也不需要重新修改鼠标坐标。</p>
+<h3 id="5-启动和结束-Gemini-语音输入"><a href="#5-启动和结束-Gemini-语音输入" class="headerlink" title="5.启动和结束 Gemini 语音输入"></a>5.启动和结束 Gemini 语音输入</h3><p>Gemini 自己的语音输入快捷键是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + Shift + D</span><br></pre></td></tr></table></figure>
+
+<p>因此清空输入框以后，Quicker 模拟：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + Shift + D</span><br></pre></td></tr></table></figure>
+
+<p>开始录音。</p>
+<p>随后使用 Quicker 的「等待按键」模块：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">等待 F8</span><br></pre></td></tr></table></figure>
+
+<p>我说完以后按下 F8，流程继续执行，再次模拟：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + Shift + D</span><br></pre></td></tr></table></figure>
+
+<p>结束 Gemini 的语音输入。</p>
+<p>然后等待大约：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1000 ms</span><br></pre></td></tr></table></figure>
+
+<p>给 Gemini 留一点时间完成最终的语音转写。</p>
+<h3 id="6-只复制-Gemini-输入框里的文字"><a href="#6-只复制-Gemini-输入框里的文字" class="headerlink" title="6.只复制 Gemini 输入框里的文字"></a>6.只复制 Gemini 输入框里的文字</h3><p>识别完成以后，再执行第二段 JavaScript。</p>
+<p>这次不是删除，而是精准选中 Gemini 输入框中的全部文字：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">findGeminiInput</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> els = [...<span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(</span><br><span class="line">            <span class="string">&#x27;[contenteditable=&quot;true&quot;], [role=&quot;textbox&quot;]&#x27;</span></span><br><span class="line">        )].<span class="title function_">filter</span>(<span class="function"><span class="params">el</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (!el.<span class="property">isContentEditable</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">const</span> r = el.<span class="title function_">getBoundingClientRect</span>();</span><br><span class="line">            <span class="keyword">const</span> s = <span class="title function_">getComputedStyle</span>(el);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> (</span><br><span class="line">                r.<span class="property">width</span> &gt; <span class="number">200</span> &amp;&amp;</span><br><span class="line">                r.<span class="property">height</span> &gt; <span class="number">20</span> &amp;&amp;</span><br><span class="line">                r.<span class="property">bottom</span> &gt; <span class="variable language_">window</span>.<span class="property">innerHeight</span> * <span class="number">0.55</span> &amp;&amp;</span><br><span class="line">                r.<span class="property">top</span> &lt; <span class="variable language_">window</span>.<span class="property">innerHeight</span> &amp;&amp;</span><br><span class="line">                s.<span class="property">display</span> !== <span class="string">&#x27;none&#x27;</span> &amp;&amp;</span><br><span class="line">                s.<span class="property">visibility</span> !== <span class="string">&#x27;hidden&#x27;</span></span><br><span class="line">            );</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        els.<span class="title function_">sort</span>(</span><br><span class="line">            <span class="function">(<span class="params">a, b</span>) =&gt;</span></span><br><span class="line">                b.<span class="title function_">getBoundingClientRect</span>().<span class="property">bottom</span> -</span><br><span class="line">                a.<span class="title function_">getBoundingClientRect</span>().<span class="property">bottom</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> els[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> el = <span class="title function_">findGeminiInput</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!el) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;未找到 Gemini 输入框&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    el.<span class="title function_">focus</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> range = <span class="variable language_">document</span>.<span class="title function_">createRange</span>();</span><br><span class="line">    range.<span class="title function_">selectNodeContents</span>(el);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> sel = <span class="variable language_">window</span>.<span class="title function_">getSelection</span>();</span><br><span class="line">    sel.<span class="title function_">removeAllRanges</span>();</span><br><span class="line">    sel.<span class="title function_">addRange</span>(range);</span><br><span class="line"></span><br><span class="line">    <span class="literal">true</span>;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<p>JavaScript 只负责：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">找到真正的输入框</span><br><span class="line">→ 聚焦</span><br><span class="line">→ 选中输入框中的文字</span><br></pre></td></tr></table></figure>
+
+<p>然后再让 Quicker 执行：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+C</span><br><span class="line">Backspace</span><br></pre></td></tr></table></figure>
+
+<p>这样：</p>
+<ul>
+<li><p><code>Ctrl+C</code> 把本轮语音转写复制到剪贴板；</p>
+</li>
+<li><p><code>Backspace</code> 把 Gemini 输入框清空，为下一轮使用做准备。</p>
+</li>
+</ul>
+<h3 id="7-回到原来的输入框"><a href="#7-回到原来的输入框" class="headerlink" title="7.回到原来的输入框"></a>7.回到原来的输入框</h3><p>最后通过之前保存的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sourceHwnd</span><br></pre></td></tr></table></figure>
+
+<p>把原来的窗口重新设为前台窗口。</p>
+<p>等待大约：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">500 ms</span><br></pre></td></tr></table></figure>
+
+<p>然后：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+V</span><br></pre></td></tr></table></figure>
+
+<p>刚才 Gemini 识别的文字就会被自动粘贴回来。</p>
+<p>整个过程中不会自动发送消息，所以我还可以继续修改文字，再决定什么时候按 Enter。</p>
+<h3 id="8-最终流程"><a href="#8-最终流程" class="headerlink" title="8.最终流程"></a>8.最终流程</h3><p>最后整个 Quicker 动作是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">获取当前窗口 → sourceHwnd</span><br><span class="line"></span><br><span class="line">查找 Gemini Chrome → geminiHwnd</span><br><span class="line"></span><br><span class="line">激活 Gemini</span><br><span class="line"></span><br><span class="line">设置 Browser Control 连接 Google Chrome</span><br><span class="line"></span><br><span class="line">JavaScript 清空 Gemini 输入框</span><br><span class="line"></span><br><span class="line">Ctrl+Shift+D</span><br><span class="line">开始语音输入</span><br><span class="line"></span><br><span class="line">等待 F8</span><br><span class="line"></span><br><span class="line">Ctrl+Shift+D</span><br><span class="line">结束语音输入</span><br><span class="line"></span><br><span class="line">等待 1000 ms</span><br><span class="line"></span><br><span class="line">JavaScript 选中 Gemini 输入框中的转写</span><br><span class="line"></span><br><span class="line">Ctrl+C</span><br><span class="line"></span><br><span class="line">Backspace</span><br><span class="line">清空 Gemini 输入框</span><br><span class="line"></span><br><span class="line">返回 sourceHwnd</span><br><span class="line"></span><br><span class="line">等待 500 ms</span><br><span class="line"></span><br><span class="line">Ctrl+V</span><br></pre></td></tr></table></figure>
+
+<p>实际使用下来已经可以稳定完成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在 ChatGPT 中启动</span><br><span class="line">→ 自动切到 Gemini</span><br><span class="line">→ 说话</span><br><span class="line">→ F8</span><br><span class="line">→ 自动返回 ChatGPT</span><br><span class="line">→ 文字已经出现在输入框里</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>之后准备买一个自定义键盘，把这个 Quicker 动作本身的全局快捷键映射到键盘上的一个独立按键。</p>
+<p>现在启动语音还需要按组合键，之后理想状态就是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一个键启动</span><br><span class="line">→ 说话</span><br><span class="line">→ F8 结束</span><br><span class="line">→ 自动粘贴回来</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zhimaheiye.github.io/2026/09/24/quicker%E8%84%9A%E6%9C%AC-%E5%A4%8D%E7%94%A8gemini%E7%9A%84%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5/" data-id="cuidjMbTIGaVjN13WToTvqqT-" data-title="quicker脚本-复用gemini的语音输入" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/quicker/" rel="tag">quicker</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/06/08/ai%E8%81%8A%E5%A4%A9%E8%A1%A8%E6%83%85%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ai聊天表情包管理工具</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/obsidian/" rel="tag">obsidian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quicker/" rel="tag">quicker</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/obsidian/" style="font-size: 20px;">obsidian</a> <a href="/tags/quicker/" style="font-size: 10px;">quicker</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/09/">September 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">June 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">May 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/02/">February 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/09/24/quicker%E8%84%9A%E6%9C%AC-%E5%A4%8D%E7%94%A8gemini%E7%9A%84%E8%AF%AD%E9%9F%B3%E8%BE%93%E5%85%A5/">quicker脚本-复用gemini的语音输入</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/08/ai%E8%81%8A%E5%A4%A9%E8%A1%A8%E6%83%85%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">ai聊天表情包管理工具</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/02/%E8%87%AA%E5%8A%A8%E5%85%B3%E6%9C%BA%E6%8B%A6%E6%88%AA%E8%84%9A%E6%9C%AC/">自动关机拦截脚本</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/31/%E5%A4%9A%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98/">多设备同步浏览器缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/29/obsidian%E4%BB%93%E5%BA%93%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/">obsidian仓库更新日志</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
